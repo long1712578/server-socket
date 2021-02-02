@@ -24,7 +24,7 @@
         var addedUser = false;
         // socket nhận tin nhắn từ 1 client
         socket.on('send_message', function(text) {
-            console.log(socket.username);
+            console.log("from",socket.username,"send message: ",text);
             // gửi tin nhắn tới các client đang kết nối socket
             // ngoại trừ client đang kết nối (gửi tin nhắn)
             socket.broadcast.emit('receive_message', {
@@ -36,8 +36,8 @@
         socket.on('user_join', function(username) {
             if (addedUser)
                 return false;
+            console.log('user_join: '+ username);
             socket.username = username;
-            console.log('user_join: '+ socket.username);
 
             ++ numUsers;
             addedUser = true;
@@ -52,7 +52,7 @@
             });
         });
 
-        socket.on('typing', function(data) {
+        socket.on('typing', function() {
             socket.broadcast.emit('typing', {
                 username: socket.username
             });
